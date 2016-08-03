@@ -1,10 +1,21 @@
 class  BlogPost #Declare Parent class
+  
+  @@blogs_created = [] # on object creation initialize this to an array
   @@total_blogpost = 0 #intialize blogpost counter
   
-  def intialize
-    @@total_blogpost += 1
+  def self.all
+    @@blogs_created
   end
   
+  def update_blog(content)
+    @@total_blogpost += 1
+	 blogs_created.push(content)
+  end
+  
+  def blogs_saved
+     Personal_blog.add(self)
+    	
+  end
      
   
   def self.current_count
@@ -35,14 +46,22 @@ class  BlogPost #Declare Parent class
     return @author
   end
   
-  def set_content=(content)
-    @content = content
+  def set_content=(temp_content)
+    @content = temp_content
   end
   
   def get_content
     return @content
   end
   
+  def self.publish
+    @@blogs_created.each do |post|
+	puts "Title:\n #{post.title}"
+	puts "Author:\n #{post.author}"
+	puts "Body:\n #{post.content}}"
+	puts "Date:\n #{post.pub_date}"
+  end
+   end
 end
 
 class Personal_blog < BlogPost
@@ -50,25 +69,10 @@ class Personal_blog < BlogPost
     return "Personal Blog"
    end
    
-   
-     
+      
  end
  
- 
- 
   
-  def publish
-    puts "The content of the blogs are #{blogs_created}"
-  end
-  
-  def blogs_saved(temp_content)
-     blogs_created = [] # on object creation initialize this to an array
-     blogs_created.push(temp_content)
-	 publish
-  end
-   
- 
-
    puts "Do you want to create another blog post, Enter Y to create or N to stop"
    new_post = gets
    my_personal_blog = Personal_blog.new
@@ -94,12 +98,10 @@ class Personal_blog < BlogPost
    
    puts "The title of the blog is #{personal_blog_title} the author is #{personal_blog_author} date #{personal_blog_pub_date} content is #{personal_blog_content}"
   
-  
-  BlogPost.current_count
-  blogs_saved(temp_content)
-  
-  
-  my_personal_blog.inspect
+   personal_blog.current_count
+   personal_blog.all
+   my_personal_blog.inspect
+   personal_blog.publish
   
   
    
